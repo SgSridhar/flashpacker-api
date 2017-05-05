@@ -7,7 +7,6 @@ const LocationSchema = mongoose.Schema({
 	},
 	placeId: {
 		type: String,
-		required: true
 	},
   location: {
 		type: Number,

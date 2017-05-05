@@ -164,6 +164,7 @@ function selectNextUl(node) {
 
 export default function extractDataFromWikipedia() {
   let hillStations = []
+  let beaches = []
   axios
     .get(urlForHillStations, {
       timeout: 30000
@@ -176,51 +177,109 @@ export default function extractDataFromWikipedia() {
           const headNode = $("#" + s.stateId).parent()
           const listNode = selectNextUl(headNode.next())
           listNode.children().map((index, elem) => {
-            const name = $(elem).text()
-            hillStations.push({
-              name: name,
-              state: s.stateName
-            })
+            const text = $(elem).text()
+            if(text.indexOf(':') > 1) {
+              const index = text.indexOf(':') + 1
+              const names = text.substring(index).split('\n')
+              names.map((name) => {
+                if (name.length > 1) {
+                  hillStations.push({
+                    name: name,
+                    state: s.stateName
+                  })
+                }
+                return name
+              })
+            }
+            else {
+              const name = text.indexOf(',') > -1 ? text.split(',')[0] : text
+              // console.log(name)
+              hillStations.push({
+                name: name,
+                state: s.stateName
+              })
+            }
             return elem
           })
         }
       })
-      console.log(hillStations)
-
+      // console.log(hillStations)
+      hillStations.map((hill) => {
+        const newLocation = new Location({
+          name: hill.name,
+          state: hill.state,
+          country: 'India',
+          category: 'HILL_STATION'
+        })
+        newLocation
+          .save()
+          .then((doc) => {
+            // console.log(doc)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      })
     })
     .catch((err) => {
       console.log(err)
     })
-  //
+
+  axios
+    .get(urlForBeach)
+    .then(function(response) {
+      const $ = cheerio.load(response.data)
+      stateNames.map((s) => {
+        if($("#"+s.stateId).text()) {
+          const headNode = $("#"+s.stateId).parent()
+          const listNode = selectNextUl(headNode.next())
+          listNode.children().map((index, elem) => {
+            const text = $(elem).text()
+            if(text.indexOf(':') > 1) {
+              const index = text.indexOf(':') + 1
+              const names = text.substring(index).split('\n')
+              names.map((name) => {
+                if (name.length > 1) {
+                  beaches.push({
+                    name: name,
+                    state: s.stateName
+                  })
+                }
+                return name
+              })
+            }
+            else {
+              const name = text.indexOf(',') > -1 ? text.split(',')[0] : text
+              // console.log(name)
+              beaches.push({
+                name: name,
+                state: s.stateName
+              })
+            }
+            return elem
+          })
+        }
+      })
+      // console.log(beaches)
+      beaches.map((beach) => {
+        const newLocation = new Location({
+          name: beach.name,
+          state: beach.state,
+          country: 'India',
+          category: 'BEACH'
+        })
+        newLocation
+          .save()
+          .then((doc) => {
+            console.log(doc)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      })
+    })
+    .catch((err) => {
+      console.log("ERRRRR")
+      console.log(err)
+    })
 }
-
-
-
-
-
-
-
-//console.log("Enter")
-// axios
-//   .get(urlForBeach)
-//   .then(function(response) {
-//     console.log("IN")
-//     const $ = cheerio.load(response.data)
-//     stateNames.map((s) => {
-//       if($("#"+s.stateId).text()) {
-//         const headNode = $("#"+s.stateId).parent()
-//         const listNode = selectNextUl(headNode.next())
-//         const beaches = []
-//         listNode.children().map((index, elem) => {
-//           beaches[index] = $(elem).text()
-//           return elem
-//         })
-//         console.log(beaches)
-//       }
-//     })
-//   })
-//   .catch((err) => {
-//     console.log("ERRRRR")
-//     console.log(err)
-//   })
-// console.log("Exit")
