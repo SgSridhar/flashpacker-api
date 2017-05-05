@@ -4,12 +4,16 @@ const LocationSchema = mongoose.Schema({
 	name: {
 		type: String,
 		required: true,
+		unique: true
 	},
-	placeId: {
+	fbPlaceId: {
 		type: String,
 	},
+	gPlaceId: {
+		type: String
+	},
   location: {
-		type: Number,
+		type: [Number],
 		index: '2dsphere'
 	},
 	rating: {
@@ -21,6 +25,7 @@ const LocationSchema = mongoose.Schema({
 	category: {
 		type: String
 	},
+	city: String,
 	state: String,
 	country: String,
 	relativeLocation: String,

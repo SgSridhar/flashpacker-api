@@ -8,6 +8,7 @@ import * as config from './config'
 
 import eventRoute from './route/eventRoute'
 import extractDataFromWikipedia from './scripts/scrappers/wikipediaScrapper'
+import getLocationData from './scripts/scrappers/getLocationData'
 
 const app = express()
 mongoose.Promise = P
@@ -17,7 +18,8 @@ app.use(bodyParser.json())
 
 app.use(config.app.uriPrefix, eventRoute())
 
-extractDataFromWikipedia()
+// extractDataFromWikipedia()
+getLocationData()
 
 if (!config.mongo.uri) {
 	process.exit(2)

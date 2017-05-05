@@ -1,9 +1,5 @@
 import axios from 'axios'
 import cheerio from 'cheerio'
-import mapFunction from '../../utlis/maps'
-import P from 'bluebird'
-import Rx from 'rxjs/Rx'
-import mongoose from 'mongoose'
 
 import Location from '../../model/locationSchema'
 
@@ -162,6 +158,18 @@ function selectNextUl(node) {
   }
 }
 
+function selectNextUlBeach(node) {
+  if(node[0].name === 'ul') {
+    return node
+  }
+  if(node[0].name === 'div' && node.children().first()[0].name === 'ul') {
+    return node.children().first()
+  }
+  else{
+    return selectNextUlBeach(node.next())
+  }
+}
+
 export default function extractDataFromWikipedia() {
   let hillStations = []
   let beaches = []
@@ -232,30 +240,15 @@ export default function extractDataFromWikipedia() {
       stateNames.map((s) => {
         if($("#"+s.stateId).text()) {
           const headNode = $("#"+s.stateId).parent()
-          const listNode = selectNextUl(headNode.next())
+          const listNode = selectNextUlBeach(headNode.next())
           listNode.children().map((index, elem) => {
             const text = $(elem).text()
-            if(text.indexOf(':') > 1) {
-              const index = text.indexOf(':') + 1
-              const names = text.substring(index).split('\n')
-              names.map((name) => {
-                if (name.length > 1) {
-                  beaches.push({
-                    name: name,
-                    state: s.stateName
-                  })
-                }
-                return name
-              })
-            }
-            else {
-              const name = text.indexOf(',') > -1 ? text.split(',')[0] : text
-              // console.log(name)
-              beaches.push({
-                name: name,
-                state: s.stateName
-              })
-            }
+            const name = text.indexOf(',') > -1 ? text.split(',')[0] : text
+            // console.log(name)
+            beaches.push({
+              name: name,
+              state: s.stateName
+            })
             return elem
           })
         }
