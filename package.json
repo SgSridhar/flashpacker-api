@@ -1,14 +1,14 @@
 {
-  "name": "service-event-reg",
+  "name": "flashpacker-api",
   "version": "1.0.0",
-  "description": "Event registration system",
+  "description": "Flashpacker API",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "eslint": "eslint src",
     "test": "test"
   },
-  "author": "Sridhar S G",
+  "author": "Flash packer",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.24.1",
