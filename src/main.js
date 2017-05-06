@@ -19,7 +19,7 @@ app.use(bodyParser.json())
 app.use(config.app.uriPrefix, eventRoute())
 
 // extractDataFromWikipedia()
-getLocationData()
+// getLocationData()
 
 if (!config.mongo.uri) {
 	process.exit(2)
