@@ -9,6 +9,7 @@ import * as config from './config'
 import eventRoute from './route/eventRoute'
 import extractDataFromWikipedia from './scripts/scrappers/wikipediaScrapper'
 import getLocationData from './scripts/scrappers/getLocationData'
+import userInflux from './scripts/ratings/userInflux'
 
 const app = express()
 mongoose.Promise = P
@@ -20,6 +21,7 @@ app.use(config.app.uriPrefix, eventRoute())
 
 // extractDataFromWikipedia()
 // getLocationData()
+// userInflux('HILL_STATION')
 
 if (!config.mongo.uri) {
 	process.exit(2)
