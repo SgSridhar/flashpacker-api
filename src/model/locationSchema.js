@@ -30,7 +30,8 @@ const LocationSchema = mongoose.Schema({
 	state: String,
 	country: String,
 	relativeLocation: String,
-	popularity: String,
+	stateInflux: String,
+	countryInflux: String,
 	checkins: [{
 		date: Number,
 		checkins: Number
