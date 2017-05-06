@@ -7,22 +7,27 @@ export default function getLocationData() {
     .find({})
     .sort({name:1})
     .then((doc) => {
+    console.log(doc)
       doc.map((location) => {
         if (!R.isEmpty(location.checkins)) {
           getFacebookData(location.name)
             .then((data) => {
               if(data) {
+                console.log(data)
                 Location
                   .find({name: location.name})
                   .then((d) => {
-                    const location = data.location.latitude > 90 ? [data.location.longitude, data.location.latitude] :
+                    const originalLocation = d[0].toJSON()
+                    // console.log('DB DATA', originalLocation)
+                    const latLong = data.location.latitude < 90 ? [data.location.longitude, data.location.latitude] :
                       [data.location.latitude, data.location.longitude]
-                    const updatedLocation = {...d,
+                    const updatedLocation = {...originalLocation,
                       fbPlaceId: data.id,
                       city: data.location.city,
-                      location: location,
+                      location: latLong,
                       checkins: {date: new Date().getDate(), checkins: data.checkins ? data.checkins : d.checkins}
                     }
+                    console.log("Updated", updatedLocation)
                     Location
                       .findOneAndUpdate({name: location.name}, updatedLocation)
                       .then((document) => {

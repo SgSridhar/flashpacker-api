@@ -1,17 +1,18 @@
 import express from 'express'
 import R from 'ramda'
-
 import Location from '../model/locationSchema'
 
 
 export default function eventRoute() {
 	const route = express.Router()
 
-	route.post('/location', (req, res) => {
+	route.get('/places', (req, res) => {
+		const params = req.query.params
+		console.log(params)
 		Event
 			.find({})
-			.then((events) => {
-				res.status(200).send(events)
+			.then((places) => {
+				res.status(200).send(places)
 			})
 			.catch((err) => {
 				console.log('Error --->', err)
