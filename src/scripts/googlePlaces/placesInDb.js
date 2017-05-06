@@ -4,7 +4,6 @@ import mongoose from 'mongoose'
 import * as config from '../../config'
 
 import Location from '../../model/locationSchema'
-import {getPlaceIdsByName} from '../../utils/maps'
 
 import fs from 'fs'
 
@@ -17,8 +16,6 @@ if (!config.mongo.uri) {
 }
 
 mongoose.connection.once('open', () => {
-    console.log(`Server started in the port ${config.app.port}`)
-
     function fetchPlacesInDb() {
         return new P((resolve, reject) => {
             Location
@@ -35,7 +32,7 @@ mongoose.connection.once('open', () => {
 
     fetchPlacesInDb()
         .then((locations) => {
-            fs.writeFile('./src/scripts/googlePlaces/placesInDb.json', JSON.stringify(locations, null, 2), function (err, body) {
+            fs.writeFile('./src/scripts/googlePlaces/placesInDbInJSON.js', JSON.stringify(locations, null, 2), function (err, body) {
                 if(err) {
                     return console.log(err);
                 }

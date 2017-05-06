@@ -1,6 +1,8 @@
 import googleMaps from '@google/maps'
 import P from 'bluebird'
 
+var map
+
 const googleMapsClient = googleMaps.createClient({
   key: 'AIzaSyBN8HDf7Ua-fdjECRtlQ3ziKuQJKQgZEKw',
   Promise: P,
@@ -10,7 +12,9 @@ const googleMapsClient = googleMaps.createClient({
   }
 });
 
-export default function getPlaceIdsByName(name) {
+// map = googleMaps.
+
+export function getPlaceIdsByName(name) {
   console.log('Getting place Id for ---> ', name  )
   return googleMapsClient.places({
     query: name

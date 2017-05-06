@@ -12,7 +12,7 @@ const LocationSchema = mongoose.Schema({
 	gPlaceId: {
 		type: String
 	},
-  location: {
+  	location: {
 		type: [Number],
 		index: '2dsphere'
 	},
@@ -25,6 +25,7 @@ const LocationSchema = mongoose.Schema({
 	category: {
 		type: String
 	},
+	places: [],
 	city: String,
 	state: String,
 	country: String,
