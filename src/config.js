@@ -3,7 +3,7 @@ import {mongoCreds} from '../mongo-creds'
 export const app = {
 	name: 'FlashPacker',
 	uriPrefix: '/api/v1',
-	port: '3000',
+	port: process.env.PORT || '3000',
 }
 
 export const mongo = {
