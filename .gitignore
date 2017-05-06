@@ -1,4 +1,5 @@
 node_modules
 npm-debug.log
 facebook-creds.js
+mongo-creds.js
 .idea

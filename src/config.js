@@ -1,3 +1,5 @@
+import {mongoCreds} from '../mongo-creds'
+
 export const app = {
 	name: 'FlashPacker',
 	uriPrefix: '/api/v1',
@@ -5,7 +7,7 @@ export const app = {
 }
 
 export const mongo = {
-	uri: 'mongodb://localhost:27017/flash-packer',
+	uri: `mongodb://${mongoCreds.username}:${mongoCreds.password}@ds137090.mlab.com:37090/flashpacker`,
 	poolSize: 5,
 }
 
