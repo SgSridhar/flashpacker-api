@@ -10,8 +10,8 @@ const googleMapsClient = googleMaps.createClient({
   }
 });
 
-export default function mapFunction(name) {
-  console.log('Nameeeee', name  )
+export default function getPlaceIdsByName(name) {
+  console.log('Getting place Id for ---> ', name  )
   return googleMapsClient.places({
     query: name
   }).asPromise()
