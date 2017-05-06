@@ -25,6 +25,12 @@ const LocationSchema = mongoose.Schema({
 	category: {
 		type: String
 	},
+	reviewStateRate: {
+		type: Number,
+	},
+    reviewCountryRate: {
+        type: Number,
+    },
 	places: [],
 	city: String,
 	state: String,
